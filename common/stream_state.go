@@ -24,7 +24,7 @@ type StreamState struct {
 	s uint8
 }
 
-// Check whether the stream is open.
+// Open checks whether the stream is open.
 func (s *StreamState) Open() bool {
 	s.l.Lock()
 	open := s.s == stateOpen
@@ -32,7 +32,7 @@ func (s *StreamState) Open() bool {
 	return open
 }
 
-// Check whether the stream is closed.
+// Closed checks whether the stream is closed.
 func (s *StreamState) Closed() bool {
 	s.l.Lock()
 	closed := s.s == stateClosed
@@ -40,7 +40,7 @@ func (s *StreamState) Closed() bool {
 	return closed
 }
 
-// Check whether the stream is half-closed at the other endpoint.
+// ClosedThere checks whether the stream is half-closed at the other endpoint.
 func (s *StreamState) ClosedThere() bool {
 	s.l.Lock()
 	closedThere := s.s == stateClosed || s.s == stateHalfClosedThere
@@ -48,12 +48,12 @@ func (s *StreamState) ClosedThere() bool {
 	return closedThere
 }
 
-// Check whether the stream is open at the other endpoint.
+// OpenThere checks whether the stream is open at the other endpoint.
 func (s *StreamState) OpenThere() bool {
 	return !s.ClosedThere()
 }
 
-// Check whether the stream is half-closed at the other endpoint.
+// ClosedHere checks whether the stream is half-closed at the other endpoint.
 func (s *StreamState) ClosedHere() bool {
 	s.l.Lock()
 	closedHere := s.s == stateClosed || s.s == stateHalfClosedHere
@@ -61,7 +61,7 @@ func (s *StreamState) ClosedHere() bool {
 	return closedHere
 }
 
-// Check whether the stream is open locally.
+// OpenHere checks whether the stream is open locally.
 func (s *StreamState) OpenHere() bool {
 	return !s.ClosedHere()
 }
